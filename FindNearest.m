@@ -1,0 +1,20 @@
+function [nearest,pathlog,repeat] = FindNearest(position,obstacle,map,pathlog)
+draw = true;%绘制A星路线
+[point,long] = FindFirst(position,obstacle,map,pathlog);
+near(1).loc = point;
+near(1).lon = long;
+[point,long] = FindSecond(position,obstacle,map,pathlog);
+near(2).loc = point;
+near(2).lon = long;
+[point,long] = FindThird(position,obstacle,map,pathlog);
+near(3).loc = point;
+near(3).lon = long;
+[point,long] = FindFourth(position,obstacle,map,pathlog);
+near(4).loc = point;
+near(4).lon = long;
+[~,index] = sort([near.lon]);%寻找距离最短的点
+nearest = near(index(1)).loc;
+map.start = position;
+map.goal = nearest;
+[~,~,pathlog,repeat] = AStar(obstacle,map,draw,pathlog);%绘制路线
+end
